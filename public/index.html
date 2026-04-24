@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laptop Store - Bán Laptop & Phụ Kiện Chính Hãng</title>
+  <meta name="description" content="Cửa hàng laptop và phụ kiện chính hãng tại TP.HCM. Dây sạc, tai nghe, chuột, bàn phím, loa, USB, RAM, vệ sinh laptop.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#/" class="logo" id="logo-link">
+        <i class="fas fa-laptop"></i>
+        <span>Laptop<b>Store</b></span>
+      </a>
+      <div class="search-bar" id="search-bar">
+        <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
+        <button id="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <nav class="header-nav">
+        <a href="tel:0392005016" class="nav-hotline"><i class="fas fa-phone"></i> <span>0392005016</span></a>
+        <a href="#/cart" class="nav-cart" id="nav-cart"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cart-badge">0</span></a>
+        <div class="nav-user" id="nav-user">
+          <button class="btn-login" id="btn-show-login"><i class="fas fa-user"></i> <span>Đăng nhập</span></button>
+        </div>
+      </nav>
+    </div>
+    <!-- Category nav -->
+    <div class="cat-nav" id="cat-nav">
+      <div class="container cat-nav-inner">
+        <a href="#/" class="cat-link active" data-cat="all"><i class="fas fa-th"></i> Tất cả</a>
+        <a href="#/products?category=laptop" class="cat-link" data-cat="laptop"><i class="fas fa-laptop"></i> Laptop</a>
+        <a href="#/products?category=sac" class="cat-link" data-cat="sac"><i class="fas fa-plug"></i> Dây Sạc</a>
+        <a href="#/products?category=tai-nghe" class="cat-link" data-cat="tai-nghe"><i class="fas fa-headphones"></i> Tai Nghe</a>
+        <a href="#/products?category=chuot" class="cat-link" data-cat="chuot"><i class="fas fa-mouse"></i> Chuột</a>
+        <a href="#/products?category=ban-phim" class="cat-link" data-cat="ban-phim"><i class="fas fa-keyboard"></i> Bàn Phím</a>
+        <a href="#/products?category=loa" class="cat-link" data-cat="loa"><i class="fas fa-volume-up"></i> Loa</a>
+        <a href="#/products?category=usb" class="cat-link" data-cat="usb"><i class="fas fa-usb"></i> USB</a>
+        <a href="#/products?category=ram" class="cat-link" data-cat="ram"><i class="fas fa-memory"></i> RAM</a>
+        <a href="#/products?category=ve-sinh" class="cat-link" data-cat="ve-sinh"><i class="fas fa-spray-can"></i> Vệ Sinh</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main" id="main-content">
+    <div class="loading-screen" id="loading-screen">
+      <div class="spinner"></div>
+      <p>Đang tải...</p>
+    </div>
+  </main>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="auth-modal" style="display:none">
+    <div class="modal">
+      <button class="modal-close" id="auth-modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="login">Đăng nhập</button>
+        <button class="modal-tab" data-tab="register">Đăng ký</button>
+      </div>
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label>Tên đăng nhập</label>
+          <input type="text" id="login-username" required placeholder="Nhập tên đăng nhập">
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu</label>
+          <input type="password" id="login-password" required placeholder="Nhập mật khẩu">
+        </div>
+        <div class="form-error" id="login-error"></div>
+        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+      </form>
+      <form id="register-form" class="auth-form" style="display:none">
+        <div class="form-group">
+          <label>Tên đăng nhập</label>
+          <input type="text" id="reg-username" required placeholder="Ít nhất 3 ký tự">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" required placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label>Họ tên</label>
+          <input type="text" id="reg-fullname" placeholder="Nguyễn Văn A">
+        </div>
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <input type="text" id="reg-phone" placeholder="0901234567">
+        </div>
+        <div class="form-group">
+          <label>Mật khẩu</label>
+          <input type="password" id="reg-password" required placeholder="Ít nhất 6 ký tự">
+        </div>
+        <div class="form-error" id="register-error"></div>
+        <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <h3><i class="fas fa-laptop"></i> Laptop<b>Store</b></h3>
+        <p>Chuyên cung cấp laptop và phụ kiện laptop chính hãng với giá tốt nhất.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <p><i class="fas fa-phone"></i> Hotline: <a href="tel:0392005016">0392005016</a></p>
+        <p><i class="fas fa-map-marker-alt"></i> 77 Bùi Xuân Phái, Tây Thạnh, TP.HCM</p>
+        <p><i class="fas fa-envelope"></i> contact@laptopstore.vn</p>
+      </div>
+      <div class="footer-col">
+        <h4>Danh mục</h4>
+        <a href="#/products?category=laptop">Laptop</a>
+        <a href="#/products?category=sac">Dây Sạc</a>
+        <a href="#/products?category=tai-nghe">Tai Nghe</a>
+        <a href="#/products?category=chuot">Chuột & Bàn phím</a>
+      </div>
+      <div class="footer-col">
+        <h4>Chính sách</h4>
+        <a href="#">Bảo hành</a>
+        <a href="#">Đổi trả</a>
+        <a href="#">Vận chuyển</a>
+        <a href="#">Thanh toán</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2024 LaptopStore. Chủ sở hữu: TRAN XUAN HUONG</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
