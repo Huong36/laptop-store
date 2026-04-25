@@ -56,7 +56,7 @@ async function placeOrder(){
   if(!name||!phone||!address){errEl.textContent='Vui lòng điền đầy đủ thông tin giao hàng';return;}
   try{
     const d=await api('/orders',{method:'POST',body:JSON.stringify({payment_method:selectedPayment,shipping_name:name,shipping_phone:phone,shipping_address:address,note})});
-    toast(d.message);goTo('/order-success/'+d.order.id);
+    toast(d.message);updateCartBadge();goTo('/order-success/'+d.order.id);
   }catch(e){errEl.textContent=e.message}
 }
 
