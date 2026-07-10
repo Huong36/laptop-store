@@ -1,11 +1,11 @@
-# Đồ án Kiểm Định Phần Mềm - Laptop Store 
+# Dự án Thực hành Kiểm thử - Laptop Store
 
-Chào mừng bạn đến với kho lưu trữ Đồ án môn học **Kiểm định phần mềm**. 
-Dự án này tập trung vào việc áp dụng các kỹ thuật kiểm thử phần mềm trên hệ thống website thương mại điện tử kinh doanh Laptop (Máy tính xách tay).
+Chào mừng bạn đến với kho lưu trữ dự án cá nhân **Laptop Store**. 
+Đây là một website thương mại điện tử do mình tự phát triển nhằm mục đích làm môi trường thực hành các kỹ thuật kiểm thử phần mềm (Software Testing).
 
 ## Tổng quan dự án
 
-Dự án mô phỏng quá trình kiểm thử thực tế, từ khâu lập kế hoạch, thiết kế kịch bản (Test Cases), đến việc thực thi (Execution) và báo cáo lỗi (Bug Report) bằng phương pháp **Kiểm thử thủ công (Manual Testing)**.
+Dự án mô phỏng quá trình kiểm thử thực tế đối với một dự án cá nhân, từ khâu lập kế hoạch, thiết kế kịch bản (Test Cases), đến việc thực thi (Execution) và báo cáo lỗi (Bug Report) bằng phương pháp **Kiểm thử thủ công (Manual Testing)**.
 
 ### Các tài liệu trong dự án
 
@@ -26,4 +26,4 @@ Dự án mô phỏng quá trình kiểm thử thực tế, từ khâu lập kế
 - Phân tích luồng dữ liệu (Data Flow) giữa Frontend, API và Database SQLite
 
 ---
-*Dự án được thực hiện bởi: **[Trần Xuân Hướng](https://github.com/Huong36)***
+*Dự án được tạo và thực hiện bởi: **[Trần Xuân Hướng](https://github.com/Huong36)***
