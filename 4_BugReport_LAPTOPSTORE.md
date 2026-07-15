@@ -16,7 +16,7 @@ Tài liệu này ghi nhận các lỗi (Bugs) được phát hiện trong quá t
 ### BUG_01: Tìm kiếm sản phẩm phân biệt chữ hoa, chữ thường
 - **Mã Test Case liên quan:** TC24
 - **Môi trường:** Google Chrome (Version 114) / Windows 11
-- **Người báo cáo:** Tester
+- **Người báo cáo:** Trần Xuân Hướng
 - **Mô tả (Description):** Khi người dùng nhập từ khóa tìm kiếm (Ví dụ: "asus" viết thường), hệ thống trả về kết quả rỗng (0 sản phẩm). Tuy nhiên, trong Database vẫn có sản phẩm mang tên "Laptop ASUS". Nguyên nhân do câu lệnh truy vấn SQL đang phân biệt chữ hoa chữ thường một cách cứng ngắc.
 - **Các bước tái hiện (Steps to Reproduce):**
   1. Truy cập vào trang chủ Laptop Store.
@@ -31,7 +31,7 @@ Tài liệu này ghi nhận các lỗi (Bugs) được phát hiện trong quá t
 ### BUG_02: Có thể nhập số lượng âm vào Giỏ hàng
 - **Mã Test Case liên quan:** TC39
 - **Môi trường:** Microsoft Edge / Windows 11
-- **Người báo cáo:** Tester
+- **Người báo cáo:** Trần Xuân Hướng
 - **Mô tả (Description):** Tại màn hình Giỏ hàng, ô input nhập số lượng sản phẩm không chặn việc gõ dấu trừ (`-`) từ bàn phím. Nếu người dùng bôi đen và gõ trực tiếp số `-5`, hệ thống tự động cập nhật số lượng là `-5` và làm cho Tổng tiền của giỏ hàng bị Âm (Ví dụ: `-50,000,000đ`). 
 - **Các bước tái hiện (Steps to Reproduce):**
   1. Đăng nhập và Thêm 1 sản phẩm "Laptop MSI Bravo 15" vào giỏ hàng.
