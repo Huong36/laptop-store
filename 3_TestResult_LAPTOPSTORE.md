@@ -6,7 +6,7 @@ Quá trình kiểm thử được thực hiện trên môi trường Localhost.
 ## 1. Tóm tắt kết quả (Summary)
 
 - **Ngày thực hiện:** 15/07/2026
-- **Người thực hiện:** Tester
+- **Người thực hiện:** Trần Xuân Hướng
 - **Tổng số Test Cases:** 50
 - **Số TC Passed:** 48
 - **Số TC Failed:** 2
