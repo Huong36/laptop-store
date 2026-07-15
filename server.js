@@ -61,6 +61,12 @@ async function start() {
       console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
       console.log(`📱 Hotline: 0392005016`);
       console.log(`📍 Địa chỉ: 77 Bùi Xuân Phái, Tây Thạnh, TP.HCM`);
+      
+      // Tự động mở trình duyệt
+      const { exec } = require('child_process');
+      const url = `http://localhost:${PORT}`;
+      const startCmd = (process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open');
+      exec(`${startCmd} ${url}`);
     });
   } catch (err) {
     console.error('❌ Lỗi khởi động server:', err);

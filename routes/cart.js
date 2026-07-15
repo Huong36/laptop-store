@@ -58,6 +58,9 @@ router.post('/', authenticate, async (req, res) => {
     
     if (existing.length > 0 && existing[0].values.length > 0) {
       const newQty = existing[0].values[0][1] + quantity;
+      if (product[0].values[0][1] < newQty) {
+        return res.status(400).json({ error: `Kho chỉ còn ${product[0].values[0][1]} sản phẩm` });
+      }
       db.run(`UPDATE cart_items SET quantity = ? WHERE id = ?`, [newQty, existing[0].values[0][0]]);
     } else {
       db.run(`INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)`, [req.user.id, product_id, quantity]);
@@ -80,6 +83,21 @@ router.put('/:id', authenticate, async (req, res) => {
     }
 
     const db = await getDb();
+    
+    // Kiểm tra số lượng tồn kho của sản phẩm trong cart item này
+    const cartItem = db.exec(`SELECT product_id FROM cart_items WHERE id = ${req.params.id} AND user_id = ${req.user.id}`);
+    if (cartItem.length === 0 || cartItem[0].values.length === 0) {
+      return res.status(404).json({ error: 'Không tìm thấy sản phẩm trong giỏ' });
+    }
+    const productId = cartItem[0].values[0][0];
+    
+    const product = db.exec(`SELECT stock FROM products WHERE id = ${productId}`);
+    const currentStock = product[0].values[0][0];
+    
+    if (currentStock < quantity) {
+      return res.status(400).json({ error: `Kho chỉ còn ${currentStock} sản phẩm` });
+    }
+
     db.run(`UPDATE cart_items SET quantity = ? WHERE id = ? AND user_id = ?`, [quantity, req.params.id, req.user.id]);
     saveDb();
 

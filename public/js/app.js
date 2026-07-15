@@ -37,8 +37,9 @@ async function router(){
 
   try{
     if(hash==='/'){
-      const d=await api('/products?limit=50&sort=featured');
-      main.innerHTML=renderHome(d.products);
+      const d=await api('/products?limit=8&sort=featured');
+      const bs=await api('/products?limit=8&sort=bestseller');
+      main.innerHTML=renderHome(d.products, bs.products);
     }
     else if(hash.startsWith('/products')){
       const q=hash.includes('?')?hash.split('?')[1]:'';
@@ -48,7 +49,8 @@ async function router(){
     else if(hash.startsWith('/product/')){
       const id=hash.split('/')[2];
       const d=await api('/products/'+id);
-      main.innerHTML=renderProductDetail(d);
+      const r=await api(`/products/${id}/reviews`);
+      main.innerHTML=renderProductDetail(d, r);
     }
     else if(hash==='/cart'){
       if(!getToken()){toast('Vui lòng đăng nhập','error');showAuthModal();return;}
@@ -82,7 +84,8 @@ async function router(){
 
 // Auth
 function setupAuth(){
-  document.getElementById('btn-show-login').addEventListener('click',showAuthModal);
+  const btnLogin = document.getElementById('btn-show-login');
+  if (btnLogin) btnLogin.addEventListener('click',showAuthModal);
   document.getElementById('auth-modal-close').addEventListener('click',hideAuthModal);
   document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target.id==='auth-modal')hideAuthModal();});
   document.querySelectorAll('.modal-tab').forEach(tab=>{
@@ -160,4 +163,22 @@ function setupSearch(){
 async function loadProducts(cat,page=1){
   let q='page='+page;if(cat)q+='&category='+cat;
   goTo('/products?'+q);
+}
+
+// Review action
+async function submitReview(e, productId) {
+  e.preventDefault();
+  if(!getToken()){toast('Vui lòng đăng nhập để đánh giá','error');showAuthModal();return;}
+  const rating = document.getElementById('review-rating').value;
+  const comment = document.getElementById('review-comment').value;
+  try {
+    const d = await api(`/products/${productId}/reviews`, {
+      method: 'POST',
+      body: JSON.stringify({ rating: parseInt(rating), comment })
+    });
+    toast(d.message);
+    router();
+  } catch (err) {
+    toast(err.message, 'error');
+  }
 }

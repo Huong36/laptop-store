@@ -1,6 +1,6 @@
 const express = require('express');
-const { getDb } = require('../database/init');
-const { optionalAuth } = require('../middleware/auth');
+const { getDb, saveDb } = require('../database/init');
+const { optionalAuth, authenticate } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -39,6 +39,7 @@ router.get('/', async (req, res) => {
     else if (sort === 'price_desc') orderBy = 'price DESC';
     else if (sort === 'name') orderBy = 'name ASC';
     else if (sort === 'featured') orderBy = 'featured DESC, created_at DESC';
+    else if (sort === 'bestseller') orderBy = 'sold DESC, created_at DESC';
 
     const offset = (parseInt(page) - 1) * parseInt(limit);
     const whereClause = where.join(' AND ');
@@ -103,6 +104,61 @@ router.get('/:id', async (req, res) => {
     }
 
     res.json({ product, relatedProducts });
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi hệ thống' });
+  }
+});
+
+// Lấy đánh giá sản phẩm
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const db = await getDb();
+    const result = db.exec(`
+      SELECT r.id, r.rating, r.comment, r.created_at, u.full_name, u.username
+      FROM reviews r
+      JOIN users u ON r.user_id = u.id
+      WHERE r.product_id = ${req.params.id}
+      ORDER BY r.created_at DESC
+    `);
+    
+    let reviews = [];
+    if (result.length > 0) {
+      const cols = result[0].columns;
+      reviews = result[0].values.map(row => {
+        const obj = {};
+        cols.forEach((col, i) => obj[col] = row[i]);
+        return obj;
+      });
+    }
+
+    // Tính điểm trung bình
+    let avg_rating = 0;
+    if (reviews.length > 0) {
+      const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
+      avg_rating = (sum / reviews.length).toFixed(1);
+    }
+
+    res.json({ reviews, avg_rating, total: reviews.length });
+  } catch (err) {
+    res.status(500).json({ error: 'Lỗi hệ thống' });
+  }
+});
+
+// Thêm đánh giá
+router.post('/:id/reviews', authenticate, async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ error: 'Số sao đánh giá không hợp lệ' });
+    }
+    const db = await getDb();
+    
+    db.run(`INSERT INTO reviews (product_id, user_id, rating, comment) VALUES (?, ?, ?, ?)`, 
+      [req.params.id, req.user.id, rating, comment || '']);
+      
+    saveDb();
+    
+    res.json({ message: 'Cảm ơn bạn đã đánh giá sản phẩm!' });
   } catch (err) {
     res.status(500).json({ error: 'Lỗi hệ thống' });
   }

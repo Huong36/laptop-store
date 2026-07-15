@@ -7,6 +7,25 @@ Chào mừng bạn đến với kho lưu trữ dự án cá nhân **Laptop Store
 
 Dự án mô phỏng quá trình kiểm thử thực tế đối với một dự án cá nhân, từ khâu lập kế hoạch, thiết kế kịch bản (Test Cases), đến việc thực thi (Execution) và báo cáo lỗi (Bug Report) bằng phương pháp **Kiểm thử thủ công (Manual Testing)**.
 
+### Cách chạy dự án (Zero Config)
+Để những ai clone dự án về có thể "sài luôn được", hệ thống đã được tối ưu hóa. Database sẽ tự động khởi tạo và nạp dữ liệu mẫu ngay trong lần chạy đầu tiên.
+
+**Nếu bạn dùng Windows:**
+Chỉ cần nhấp đúp chuột vào file `start.bat`. Hệ thống sẽ tự động cài đặt các thư viện cần thiết, khởi động Server và tự động mở trình duyệt web cho bạn!
+
+**Nếu bạn dùng Mac / Linux:**
+Mở Terminal tại thư mục dự án và chạy lệnh sau:
+```bash
+sh start.sh
+```
+
+**Chạy thủ công:**
+```bash
+npm install
+npm start
+```
+*(Trình duyệt sẽ tự động mở trang web khi server chạy thành công)*
+
 ### Các tài liệu trong dự án
 
 - **`1_TestPlan_LAPTOPSTORE.md`**: Kế hoạch kiểm thử & Chiến lược tiếp cận.

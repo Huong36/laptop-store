@@ -55,12 +55,12 @@ router.post('/', authenticate, async (req, res) => {
     const orderResult = db.exec(`SELECT last_insert_rowid()`);
     const orderId = orderResult[0].values[0][0];
 
-    // Thêm order items & giảm stock
+    // Thêm order items & giảm stock, tăng sold
     for (const item of items) {
       const unitPrice = item.sale_price > 0 ? item.sale_price : item.price;
       db.run(`INSERT INTO order_items (order_id, product_id, product_name, quantity, price) VALUES (?, ?, ?, ?, ?)`,
         [orderId, item.product_id, item.name, item.quantity, unitPrice]);
-      db.run(`UPDATE products SET stock = stock - ? WHERE id = ?`, [item.quantity, item.product_id]);
+      db.run(`UPDATE products SET stock = stock - ?, sold = sold + ? WHERE id = ?`, [item.quantity, item.quantity, item.product_id]);
     }
 
     // Xóa giỏ hàng

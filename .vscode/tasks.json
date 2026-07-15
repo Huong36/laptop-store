@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "install",
+      "label": "npm-install",
+      "detail": "Cài đặt thư viện trước khi chạy",
+      "problemMatcher": []
+    }
+  ]
+}
