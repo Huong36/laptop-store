@@ -3,7 +3,7 @@
 ## 1. Thông tin chung (General Information)
 - **Dự án:** Website E-commerce Laptop Store
 - **Giai đoạn (Phase):** System Testing (Localhost)
-- **Người báo cáo:** Tester
+- **Người báo cáo:** Trần Xuân Hướng
 - **Ngày lập báo cáo:** 15/07/2026
 
 ## 2. Đánh giá chất lượng tổng quan (Quality Assessment)
