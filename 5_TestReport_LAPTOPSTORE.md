@@ -12,11 +12,11 @@ Nhìn chung, hệ thống hoạt động ổn định và đáp ứng tốt các
 ## 3. Số liệu thống kê (Test Metrics)
 
 ### 3.1. Tiến độ thực thi Test Cases (Execution Progress)
-- **Tổng số TC đã lên kế hoạch:** 17
-- **Số TC đã thực thi:** 17 (Tiến độ: 100%)
-- **Số TC Passed:** 15
+- **Tổng số TC đã lên kế hoạch:** 50
+- **Số TC đã thực thi:** 50 (Tiến độ: 100%)
+- **Số TC Passed:** 48
 - **Số TC Failed:** 2
-- **Tỷ lệ Pass (Pass Rate):** 88.2%
+- **Tỷ lệ Pass (Pass Rate):** 96%
 
 ### 3.2. Thống kê lỗi (Defect Summary)
 - **Tổng số Bugs phát hiện:** 2
