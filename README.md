@@ -7,7 +7,7 @@ Chào mừng bạn đến với kho lưu trữ dự án cá nhân **Laptop Store
 
 Dự án mô phỏng quá trình kiểm thử thực tế đối với một dự án cá nhân, từ khâu lập kế hoạch, thiết kế kịch bản (Test Cases), đến việc thực thi (Execution) và báo cáo lỗi (Bug Report) bằng phương pháp **Kiểm thử thủ công (Manual Testing)**.
 
-### Cách chạy dự án (Zero Config)
+### Cách chạy dự án
 Để những ai clone dự án về có thể "sài luôn được", hệ thống đã được tối ưu hóa. Database sẽ tự động khởi tạo và nạp dữ liệu mẫu ngay trong lần chạy đầu tiên.
 
 **Nếu bạn dùng Windows:**
