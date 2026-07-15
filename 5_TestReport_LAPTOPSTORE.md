@@ -1,38 +1,38 @@
-# BÁO CÁO TỔNG KẾT KIỂM THỬ (TEST SUMMARY REPORT) - LAPTOP STORE
+# BÁO CÁO NGHIỆM THU KIỂM THỬ (TEST SUMMARY REPORT)
 
-## 1. Mục đích
-Tài liệu này tổng kết lại toàn bộ quá trình kiểm thử thực hành trên dự án cá nhân **Laptop Store**. Mục đích nhằm đánh giá chất lượng tổng thể của ứng dụng, đồng thời ghi nhận lại kết quả thực hành quy trình Manual Testing.
+## 1. Thông tin chung (General Information)
+- **Dự án:** Website E-commerce Laptop Store
+- **Giai đoạn (Phase):** System Testing (Localhost)
+- **Người báo cáo:** Tester
+- **Ngày lập báo cáo:** 15/07/2026
 
-## 2. Thông tin chung
-- **Dự án:** Laptop Store (Personal Practice Project).
-- **Loại kiểm thử:** Manual Testing (Kiểm thử Hộp Đen).
-- **Thời gian thực hiện:** 10/07/2026.
-- **Người thực hiện:** Trần Xuân Hướng.
-- **Môi trường kiểm thử (Test Environments):**
-  - **Trình duyệt:** Google Chrome (v114), Microsoft Edge, Mozilla Firefox, Safari.
-  - **Hệ điều hành:** Windows 11, Windows 10, macOS.
-  - **Đường truyền (Network):** 4G, Wifi cáp quang, Giả lập Slow 3G (DevTools).
+## 2. Đánh giá chất lượng tổng quan (Quality Assessment)
+Nhìn chung, hệ thống hoạt động ổn định và đáp ứng tốt các yêu cầu nghiệp vụ cốt lõi. Các tính năng mới được bổ sung bao gồm Đánh giá sản phẩm (Reviews), Sản phẩm bán chạy (Best Seller) và Giả lập tồn kho đều tích hợp tốt vào hệ thống cũ. Tuy nhiên, vẫn còn tồn đọng một lỗi mang tính rủi ro cao (Bug_02 - Liên quan đến tính toán giỏ hàng).
 
-## 3. Tổng kết số liệu (Metrics)
-| Hạng mục | Số lượng |
-| :--- | :---: |
-| Tổng số Kịch bản (Test Cases) đã thiết kế | 50 |
-| Tổng số TC đã thực thi (Executed) | 50 |
-| Tổng số TC Đạt (Passed) | 44 |
-| Tổng số TC Lỗi (Failed) | 6 |
-| **Tỷ lệ Pass (Pass Rate)** | **88.0%** |
+## 3. Số liệu thống kê (Test Metrics)
 
-## 4. Tóm tắt lỗi (Bug Summary)
-Trong quá trình chạy 50 Test Cases, phát hiện tổng cộng **06 Bug**, phân bổ theo mức độ nghiêm trọng như sau:
+### 3.1. Tiến độ thực thi Test Cases (Execution Progress)
+- **Tổng số TC đã lên kế hoạch:** 17
+- **Số TC đã thực thi:** 17 (Tiến độ: 100%)
+- **Số TC Passed:** 15
+- **Số TC Failed:** 2
+- **Tỷ lệ Pass (Pass Rate):** 88.2%
 
-- **Critical (Lỗi bảo mật/hệ thống nghiêm trọng):** 01 lỗi (`BUG_001` - SQL Injection).
-- **High (Lỗi ảnh hưởng luồng nghiệp vụ chính/Bảo mật frontend):** 03 lỗi (`BUG_003` - XSS, `BUG_004` - Thiếu chặn Giỏ hàng, `BUG_005` - Cho phép nhập số lượng âm).
-- **Medium (Lỗi giao diện, luồng cơ bản vẫn chạy nhưng gây khó chịu):** 01 lỗi (`BUG_002` - Mạng chậm bị trắng trang).
-- **Low (Lỗi hiển thị nhỏ):** 01 lỗi (`BUG_006` - Lỗi text icon badge không reset).
+### 3.2. Thống kê lỗi (Defect Summary)
+- **Tổng số Bugs phát hiện:** 2
+- **Trạng thái Bug:** 2 Mở (Open) / 0 Đã đóng (Closed)
+- **Phân loại Bug theo mức độ (Severity):**
+  - **High:** 1 Bug (Bug_02 - Nhập số lượng âm)
+  - **Minor:** 1 Bug (Bug_01 - Tìm kiếm phân biệt hoa thường)
 
-## 5. Đánh giá chất lượng & Khuyến nghị
-- **Đánh giá chung:** Tỷ lệ Pass đạt 88%, cho thấy hệ thống đã đáp ứng được các luồng mua bán cơ bản (Hiển thị sản phẩm, Thêm giỏ hàng chuẩn, Thanh toán COD trừ tồn kho). Tuy nhiên, hệ thống đang tồn đọng các lỗ hổng bảo mật sơ đẳng (SQL Injection, XSS) và thiếu validate dữ liệu từ Frontend (nhập số lượng âm).
+## 4. Rủi ro còn tồn đọng (Outstanding Risks)
+1. **Lỗi nhập số lượng âm (BUG_02):** Nếu người dùng cố tình lợi dụng Bug này, họ có thể đặt hàng thành công với số tiền âm, làm hỏng dữ liệu tài chính của cửa hàng. Bắt buộc phải Fix trước khi lên Live.
+2. **Khó tìm kiếm sản phẩm (BUG_01):** Ảnh hưởng trực tiếp đến trải nghiệm người dùng, có thể làm giảm tỷ lệ chuyển đổi (Conversion Rate) do khách hàng nghĩ cửa hàng không có sản phẩm đó.
+
+## 5. Kết luận và Khuyến nghị (Sign-off & Recommendation)
+
+- **Trạng thái Release (Go/No-Go):** 🛑 **NO-GO (Chưa sẵn sàng)**
 - **Khuyến nghị:** 
-  1. Yêu cầu lập trình viên (Developer) ưu tiên xử lý ngay các lỗi Security (BUG_001, BUG_003) và lỗi logic tính tiền (BUG_005).
-  2. Bổ sung Parameterized Query ở Backend để chống SQLi.
-  3. Sau khi Developer fix xong 6 lỗi này, tiến hành Kiểm thử hồi quy (Regression Testing) toàn bộ hệ thống trước khi nghiệm thu dự án.
+  - Đội Developer cần tập trung Fix gấp **BUG_02** trong phần Code Javascript ở trang `cart.js`.
+  - Cần chỉnh sửa lại câu lệnh `SELECT ... WHERE name LIKE ...` ở phía API `/routes/products.js` để không bị phân biệt chữ hoa, chữ thường cho **BUG_01**.
+  - Sau khi Developer xác nhận Fix xong 2 lỗi này, đội QA sẽ thực hiện Regression Test (Kiểm thử hồi quy). Nếu mọi thứ Passed, hệ thống sẽ chuyển sang trạng thái sẵn sàng Release (Go).

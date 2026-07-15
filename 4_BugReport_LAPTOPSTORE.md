@@ -1,60 +1,42 @@
 # BÁO CÁO LỖI (BUG REPORT) - LAPTOP STORE
 
-Danh sách chi tiết 6 lỗi (Bugs) được phát hiện trong đợt kiểm thử 50 TCs.
+Tài liệu này ghi nhận các lỗi (Bugs) được phát hiện trong quá trình thực thi Test Cases. Báo cáo tuân thủ chuẩn mô tả Bug thông dụng (như JIRA/Mantis) để Developer dễ dàng tái hiện và xử lý.
+
+## Bảng Tổng hợp Bug
+
+| Bug ID | Tên Lỗi (Summary) | Mức độ nghiêm trọng (Severity) | Độ ưu tiên (Priority) | Trạng thái (Status) |
+| :--- | :--- | :---: | :---: | :---: |
+| **BUG_01** | Tìm kiếm sản phẩm phân biệt chữ hoa, chữ thường | Minor | Low | Mở (Open) |
+| **BUG_02** | Có thể nhập số lượng âm vào Giỏ hàng | High | High | Mở (Open) |
 
 ---
 
-## BUG_001: Lỗ hổng SQL Injection ở form Đăng nhập (Mã TC: TC_AUTH_09)
-- **Mức độ (Severity):** Critical (Nghiêm trọng - Lỗi bảo mật)
-- **Môi trường:** Chrome / Win11
-- **Mô tả lỗi:** Khi nhập ký tự đặc biệt `' OR 1=1--` vào trường Username, hệ thống cho phép vượt qua xác thực và tự động đăng nhập vào tài khoản đầu tiên trong Database (thường là Admin).
-- **Các bước tái hiện:**
-  1. Vào form Đăng nhập.
-  2. Nhập Username: `' OR 1=1--`
-  3. Bấm Đăng nhập.
-- **Kết quả mong đợi:** Hệ thống phải báo lỗi đăng nhập, mã hóa chuỗi đầu vào (Sử dụng Parameterized Query).
+## Chi tiết Lỗi (Bug Details)
 
-## BUG_002: Lỗi vỡ giao diện (Trắng trang) khi mạng chậm (Mã TC: TC_PROD_07)
-- **Mức độ (Severity):** Medium (Gây trải nghiệm xấu)
-- **Môi trường:** Chrome / Win11 (Network: Slow 3G)
-- **Mô tả lỗi:** Khi người dùng có mạng quá chậm hoặc chập chờn, trong lúc chờ API trả data về, trang web hiện một màn hình trắng tinh thay vì hiển thị Skeleton Loading hay Spinner.
-- **Các bước tái hiện:**
-  1. Mở DevTools (F12) -> tab Network -> Chọn Slow 3G.
-  2. Tải lại trang chủ.
-- **Kết quả mong đợi:** Phải có hiệu ứng Skeleton loading hoặc vòng quay Loading trong lúc gọi API.
+### BUG_01: Tìm kiếm sản phẩm phân biệt chữ hoa, chữ thường
+- **Mã Test Case liên quan:** TC08
+- **Môi trường:** Google Chrome (Version 114) / Windows 11
+- **Người báo cáo:** Tester
+- **Mô tả (Description):** Khi người dùng nhập từ khóa tìm kiếm (Ví dụ: "asus" viết thường), hệ thống trả về kết quả rỗng (0 sản phẩm). Tuy nhiên, trong Database vẫn có sản phẩm mang tên "Laptop ASUS". Nguyên nhân do câu lệnh truy vấn SQL đang phân biệt chữ hoa chữ thường một cách cứng ngắc.
+- **Các bước tái hiện (Steps to Reproduce):**
+  1. Truy cập vào trang chủ Laptop Store.
+  2. Click vào ô tìm kiếm trên thanh Header.
+  3. Nhập từ khóa: `asus` (chữ thường).
+  4. Bấm nút Kính lúp (Search) hoặc nhấn Enter.
+- **Kết quả thực tế (Actual Result):** Hiển thị màn hình trống với thông báo "Không tìm thấy sản phẩm nào".
+- **Kết quả mong đợi (Expected Result):** Hệ thống cần trả về tất cả các sản phẩm có chứa cụm từ "ASUS" (không phân biệt hoa/thường).
 
-## BUG_003: Lỗ hổng XSS trên thanh Tìm kiếm (Mã TC: TC_SRCH_08)
-- **Mức độ (Severity):** High (Lỗi bảo mật)
-- **Môi trường:** Chrome / Win11
-- **Mô tả lỗi:** Frontend không escape/mã hóa chuỗi tìm kiếm của người dùng. Khi nhập thẻ `<script>`, script đó sẽ được chạy ngay trên trình duyệt.
-- **Các bước tái hiện:**
-  1. Nhập vào ô Tìm kiếm chuỗi: `<script>alert(1)</script>`
-  2. Bấm Enter.
-- **Kết quả mong đợi:** Ký tự phải được mã hóa thành HTML Entities (VD: `&lt;script&gt;`).
+---
 
-## BUG_004: Không hiển thị popup chặn thêm giỏ hàng (Mã TC: TC_CART_02)
-- **Mức độ (Severity):** High (Lỗi luồng mua sắm)
-- **Môi trường:** Edge / Win10
-- **Mô tả lỗi:** Khách vãng lai chưa đăng nhập khi bấm "Thêm vào giỏ" sẽ không thấy hiện tượng gì xảy ra. Dưới Network API báo lỗi 401 nhưng UI không có Popup cảnh báo.
-- **Các bước tái hiện:**
-  1. Đảm bảo chưa đăng nhập.
-  2. Bấm "Thêm vào giỏ" 1 sản phẩm bất kỳ.
-- **Kết quả mong đợi:** Hiện Popup "Vui lòng đăng nhập để mua hàng".
-
-## BUG_005: Giỏ hàng cho phép nhập số lượng âm (Mã TC: TC_CART_05)
-- **Mức độ (Severity):** High (Lỗi logic tính tiền)
-- **Môi trường:** Chrome / Win11
-- **Mô tả lỗi:** Ô input số lượng trong trang giỏ hàng cho phép nhập số `-5`. Hệ thống tính tổng tiền thành số âm, có rủi ro hacker dùng cách này để trừ tiền các món hàng khác.
-- **Các bước tái hiện:**
-  1. Thêm sản phẩm vào giỏ.
-  2. Vào giỏ hàng, gõ số `-5` vào ô số lượng.
-- **Kết quả mong đợi:** Ô input phải chặn nhập số âm (`min="1"`). Nếu cố tình gửi API số âm, Backend phải báo lỗi 400 Bad Request.
-
-## BUG_006: Lỗi không cập nhật lại Icon Giỏ hàng sau khi Đặt hàng (Mã TC: TC_CHK_07)
-- **Mức độ (Severity):** Low (Lỗi hiển thị nhỏ)
-- **Môi trường:** Chrome / Win11
-- **Mô tả lỗi:** Đặt hàng xong, giỏ hàng trong Database đã trống nhưng con số hiển thị trên icon góc phải vẫn là số cũ (chưa về 0).
-- **Các bước tái hiện:**
-  1. Mua hàng thành công, hệ thống báo Success.
-  2. Xem lại Badge màu đỏ trên icon giỏ hàng ở thanh Header.
-- **Kết quả mong đợi:** Gọi hàm `updateCartBadge()` để set về 0 ngay lập tức mà không cần người dùng tự ấn F5.
+### BUG_02: Có thể nhập số lượng âm vào Giỏ hàng
+- **Mã Test Case liên quan:** TC14
+- **Môi trường:** Microsoft Edge / Windows 11
+- **Người báo cáo:** Tester
+- **Mô tả (Description):** Tại màn hình Giỏ hàng, ô input nhập số lượng sản phẩm không chặn việc gõ dấu trừ (`-`) từ bàn phím. Nếu người dùng bôi đen và gõ trực tiếp số `-5`, hệ thống tự động cập nhật số lượng là `-5` và làm cho Tổng tiền của giỏ hàng bị Âm (Ví dụ: `-50,000,000đ`). 
+- **Các bước tái hiện (Steps to Reproduce):**
+  1. Đăng nhập và Thêm 1 sản phẩm "Laptop MSI Bravo 15" vào giỏ hàng.
+  2. Click icon Giỏ hàng để chuyển sang trang Quản lý giỏ hàng (`/cart`).
+  3. Bôi đen con số `1` trong ô Input số lượng.
+  4. Gõ từ bàn phím số `-5` và click chuột ra ngoài (trigger onchange).
+- **Kết quả thực tế (Actual Result):** Tổng tiền thành tiền bị tính âm. Thanh toán thành công với số tiền âm.
+- **Kết quả mong đợi (Expected Result):** Ô Input không cho phép nhập ký tự `-` hoặc hệ thống tự động đưa số lượng về `1` nếu phát hiện User cố tình nhập giá trị ≤ 0.
